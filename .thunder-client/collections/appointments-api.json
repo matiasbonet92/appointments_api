@@ -1,0 +1,186 @@
+﻿{
+  "clientName": "Thunder Client",
+  "collectionName": "appointments-api",
+  "dateExported": "2026-02-04T00:00:00.000Z",
+  "version": "1.1",
+  "requests": [
+    {
+      "id": "1f4f8c10-9d1c-4e5f-8f0e-0c1a6f2c9b01",
+      "name": "Health - GET",
+      "url": "{{baseUrl}}/health",
+      "method": "GET",
+      "headers": [],
+      "params": []
+    },
+    {
+      "id": "2c1b7f30-0c27-4d8d-b9c3-43d6a7b6a3c2",
+      "name": "Ready - GET",
+      "url": "{{baseUrl}}/ready",
+      "method": "GET",
+      "headers": [],
+      "params": []
+    },
+    {
+      "id": "3f6a2c11-9e2b-4f9e-9b2b-7c3f9f1b2a33",
+      "name": "Customers - Create",
+      "url": "{{baseUrl}}/customers",
+      "method": "POST",
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "params": [],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"fullName\": \"Ada Lovelace\",\n  \"phone\": \"+54 11 5555 1234\",\n  \"email\": \"ada@example.com\"\n}"
+      }
+    },
+    {
+      "id": "4b2f7a20-1d0a-4d2a-a0b4-3b14c5f0e8b4",
+      "name": "Customers - List",
+      "url": "{{baseUrl}}/customers",
+      "method": "GET",
+      "headers": [],
+      "params": [
+        { "name": "q", "value": "" },
+        { "name": "limit", "value": "20" },
+        { "name": "offset", "value": "0" }
+      ]
+    },
+    {
+      "id": "5d1a8b21-23f4-4a0a-a33a-1f1d8e2c0a55",
+      "name": "Customers - Get By Id",
+      "url": "{{baseUrl}}/customers/{{customerId}}",
+      "method": "GET",
+      "headers": [],
+      "params": []
+    },
+    {
+      "id": "6e9c3d12-5a1d-4f3b-9a2a-0a3c7f5d1b66",
+      "name": "Services - Create",
+      "url": "{{baseUrl}}/services",
+      "method": "POST",
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "params": [],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"name\": \"Corte Cl\u00e1sico\",\n  \"durationMin\": 30,\n  \"priceCents\": 3500,\n  \"isActive\": true\n}"
+      }
+    },
+    {
+      "id": "7a2f4c13-2d8e-4c7b-b6b9-8f1a0c2e9c77",
+      "name": "Services - List",
+      "url": "{{baseUrl}}/services",
+      "method": "GET",
+      "headers": [],
+      "params": [
+        { "name": "q", "value": "" },
+        { "name": "isActive", "value": "true" },
+        { "name": "limit", "value": "20" },
+        { "name": "offset", "value": "0" }
+      ]
+    },
+    {
+      "id": "8c7d1e14-3b1c-4c3a-9a5a-1b2c3d4e5f88",
+      "name": "Services - Get By Id",
+      "url": "{{baseUrl}}/services/{{serviceId}}",
+      "method": "GET",
+      "headers": [],
+      "params": []
+    },
+    {
+      "id": "9b8a7c15-4e2f-4b5a-8c3a-2f3b4a5c6d99",
+      "name": "Services - Update",
+      "url": "{{baseUrl}}/services/{{serviceId}}",
+      "method": "PATCH",
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "params": [],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"name\": \"Corte Premium\",\n  \"durationMin\": 45,\n  \"priceCents\": 4500,\n  \"isActive\": true\n}"
+      }
+    },
+    {
+      "id": "a1c2b3d4-e5f6-4a7b-8c9d-0e1f2a3b4c55",
+      "name": "Staff - Create",
+      "url": "{{baseUrl}}/staff",
+      "method": "POST",
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "params": [],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"fullName\": \"Mar\u00eda P\u00e9rez\",\n  \"isActive\": true\n}"
+      }
+    },
+    {
+      "id": "b2c3d4e5-f6a7-4b8c-9d0e-1f2a3b4c5d66",
+      "name": "Staff - List",
+      "url": "{{baseUrl}}/staff",
+      "method": "GET",
+      "headers": [],
+      "params": [
+        { "name": "q", "value": "" },
+        { "name": "isActive", "value": "true" },
+        { "name": "limit", "value": "20" },
+        { "name": "offset", "value": "0" }
+      ]
+    },
+    {
+      "id": "c3d4e5f6-a7b8-4c9d-0e1f-2a3b4c5d6e77",
+      "name": "Staff - Get By Id",
+      "url": "{{baseUrl}}/staff/{{staffId}}",
+      "method": "GET",
+      "headers": [],
+      "params": []
+    },
+    {
+      "id": "d4e5f6a7-b8c9-4d0e-1f2a-3b4c5d6e7f88",
+      "name": "Staff - Update",
+      "url": "{{baseUrl}}/staff/{{staffId}}",
+      "method": "PATCH",
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "params": [],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"fullName\": \"Mar\u00eda P\u00e9rez (Senior)\",\n  \"isActive\": true\n}"
+      }
+    },
+    {
+      "id": "e5f6a7b8-c9d0-4e1f-2a3b-4c5d6e7f8a99",
+      "name": "Staff - Add Availability",
+      "url": "{{baseUrl}}/staff/{{staffId}}/availability",
+      "method": "POST",
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "params": [],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"dayOfWeek\": 1,\n  \"startMin\": 540,\n  \"endMin\": 1020\n}"
+      }
+    },
+    {
+      "id": "f6a7b8c9-d0e1-4f2a-3b4c-5d6e7f8a9b00",
+      "name": "Staff - List Availability",
+      "url": "{{baseUrl}}/staff/{{staffId}}/availability",
+      "method": "GET",
+      "headers": [],
+      "params": []
+    },
+    {
+      "id": "0a1b2c3d-4e5f-4a6b-8c9d-1e2f3a4b5c11",
+      "name": "Staff - Delete Availability",
+      "url": "{{baseUrl}}/staff/{{staffId}}/availability/{{availabilityRuleId}}",
+      "method": "DELETE",
+      "headers": [],
+      "params": []
+    }
+  ]
+}
