@@ -1,0 +1,13 @@
+﻿{
+  "clientName": "Thunder Client",
+  "environmentName": "local",
+  "dateExported": "2026-02-04T00:00:00.000Z",
+  "version": "1.1",
+  "variables": [
+    { "name": "baseUrl", "value": "http://localhost:3000" },
+    { "name": "customerId", "value": "" },
+    { "name": "serviceId", "value": "" },
+    { "name": "staffId", "value": "" },
+    { "name": "availabilityRuleId", "value": "" }
+  ]
+}
