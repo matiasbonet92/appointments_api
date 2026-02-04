@@ -1,0 +1,88 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum AppointmentStatus {
+  BOOKED
+  CANCELLED
+}
+
+model Customer {
+  id        String   @id @default(uuid())
+  fullName  String
+  phone     String?
+  email     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  appointments Appointment[]
+
+  @@index([fullName])
+  @@index([phone])
+}
+
+model Service {
+  id          String   @id @default(uuid())
+  name        String
+  durationMin Int
+  priceCents  Int?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  appointments Appointment[]
+
+  @@index([isActive])
+}
+
+model StaffMember {
+  id        String   @id @default(uuid())
+  fullName  String
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  availabilityRules AvailabilityRule[]
+  appointments      Appointment[]
+
+  @@index([isActive])
+  @@index([fullName])
+}
+
+model AvailabilityRule {
+  id        String   @id @default(uuid())
+  staffId   String
+  dayOfWeek Int      // 0=Sunday ... 6=Saturday (documentar)
+  startMin  Int      // minutos desde 00:00
+  endMin    Int      // minutos desde 00:00
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  staff StaffMember @relation(fields: [staffId], references: [id], onDelete: Cascade)
+
+  @@index([staffId, dayOfWeek])
+}
+
+model Appointment {
+  id         String            @id @default(uuid())
+  customerId String
+  staffId    String
+  serviceId  String
+  startAt    DateTime
+  endAt      DateTime
+  status     AppointmentStatus @default(BOOKED)
+  notes      String?
+  createdAt  DateTime          @default(now())
+  updatedAt  DateTime          @updatedAt
+
+  customer Customer    @relation(fields: [customerId], references: [id], onDelete: Restrict)
+  staff    StaffMember @relation(fields: [staffId], references: [id], onDelete: Restrict)
+  service  Service     @relation(fields: [serviceId], references: [id], onDelete: Restrict)
+
+  @@index([staffId, startAt])
+  @@index([status, startAt])
+}
