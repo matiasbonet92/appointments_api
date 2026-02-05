@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {
   Injectable,
   NotFoundException,
@@ -131,5 +132,107 @@ export class StaffService {
     await this.prisma.availabilityRule.delete({ where: { id: ruleId } });
 
     return { deleted: true };
+  }
+
+  async listSlots(
+    staffId: string,
+    dateStr: string,
+    serviceId: string,
+    stepMin: number,
+  ) {
+    await this.findOne(staffId);
+
+    const service = await this.prisma.service.findUnique({
+      where: { id: serviceId },
+    });
+    if (!service) {
+      throw new NotFoundException('Service not found');
+    }
+    if (!service.isActive) {
+      throw new BadRequestException('Service is not active');
+    }
+
+    // Parseamos fecha 'YYYY-MM-DD' como inicio de día local
+    // (MVP: consistente con tu availability que también está en hora local)
+    const date = new Date(dateStr);
+    if (Number.isNaN(date.getTime())) {
+      throw new BadRequestException('date must be a valid date');
+    }
+
+    const dayStart = new Date(date);
+    dayStart.setHours(0, 0, 0, 0);
+
+    const dayEnd = new Date(date);
+    dayEnd.setHours(23, 59, 59, 999);
+
+    const dayOfWeek = dayStart.getDay(); // 0..6
+
+    const rules = await this.prisma.availabilityRule.findMany({
+      where: { staffId, dayOfWeek },
+      orderBy: [{ startMin: 'asc' }],
+    });
+
+    if (rules.length === 0) {
+      return {
+        date: dateStr,
+        staffId,
+        serviceId,
+        durationMin: service.durationMin,
+        stepMin,
+        slots: [],
+      };
+    }
+
+    const appointments = await this.prisma.appointment.findMany({
+      where: {
+        staffId,
+        startAt: { gte: dayStart },
+        endAt: { lte: dayEnd },
+      },
+      select: { startAt: true, endAt: true },
+      orderBy: { startAt: 'asc' },
+    });
+
+    const durationMs = service.durationMin * 60_000;
+    const stepMs = stepMin * 60_000;
+
+    const slots: Array<{ startAt: string; endAt: string }> = [];
+
+    for (const rule of rules) {
+      const ruleStart = new Date(dayStart);
+      ruleStart.setMinutes(rule.startMin, 0, 0);
+
+      const ruleEnd = new Date(dayStart);
+      ruleEnd.setMinutes(rule.endMin, 0, 0);
+
+      // Generamos candidatos dentro de la regla
+      for (let t = ruleStart.getTime(); t + durationMs <= ruleEnd.getTime(); t += stepMs) {
+        const startAt = new Date(t);
+        const endAt = new Date(t + durationMs);
+
+        // regla simple: no cruzar medianoche (debería ser cierto dentro del mismo día)
+        if (endAt.toDateString() !== startAt.toDateString()) {
+          continue;
+        }
+
+        // chequeo solapamiento: existing.start < newEnd && existing.end > newStart
+        const hasConflict = appointments.some((a) => a.startAt < endAt && a.endAt > startAt);
+        if (hasConflict) continue;
+
+        slots.push({
+          startAt: startAt.toISOString(),
+          endAt: endAt.toISOString(),
+        });
+      }
+    }
+
+    return {
+      date: dateStr,
+      staffId,
+      serviceId,
+      durationMin: service.durationMin,
+      stepMin,
+      slots,
+    };
   }
 }
