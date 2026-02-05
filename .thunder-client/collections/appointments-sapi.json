@@ -1,0 +1,401 @@
+{
+  "clientName": "Thunder Client",
+  "collectionName": "appointments-sapi",
+  "dateExported": "2026-02-05T00:00:00.000Z",
+  "version": "1.1",
+  "requests": [
+    {
+      "id": "fa9e242d-0ee2-4524-bde3-d3d6ebf0a64b",
+      "name": "Health - GET",
+      "url": "{{baseUrl}}/health",
+      "method": "GET",
+      "headers": [],
+      "params": []
+    },
+    {
+      "id": "f4ddd648-6a0c-4d37-a728-c43743939bcd",
+      "name": "Ready - GET",
+      "url": "{{baseUrl}}/ready",
+      "method": "GET",
+      "headers": [],
+      "params": []
+    },
+    {
+      "id": "d0bf9157-f044-45eb-afdf-84e91744a30d",
+      "name": "Customers - Create (Full)",
+      "url": "{{baseUrl}}/customers",
+      "method": "POST",
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "params": [],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"fullName\": \"Ada Lovelace\",\n  \"phone\": \"+54 11 5555 1234\",\n  \"email\": \"ada@example.com\"\n}"
+      }
+    },
+    {
+      "id": "deb95399-7727-4585-8239-b279badc373e",
+      "name": "Customers - Create (Minimal)",
+      "url": "{{baseUrl}}/customers",
+      "method": "POST",
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "params": [],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"fullName\": \"Grace Hopper\"\n}"
+      }
+    },
+    {
+      "id": "392d17e9-34be-46e4-b62a-699d73aab252",
+      "name": "Customers - List (Default)",
+      "url": "{{baseUrl}}/customers",
+      "method": "GET",
+      "headers": [],
+      "params": [
+        { "name": "q", "value": "" },
+        { "name": "limit", "value": "20" },
+        { "name": "offset", "value": "0" }
+      ]
+    },
+    {
+      "id": "903e7bd2-3d07-4095-9c4c-2512ba4d709e",
+      "name": "Customers - List (Search)",
+      "url": "{{baseUrl}}/customers",
+      "method": "GET",
+      "headers": [],
+      "params": [
+        { "name": "q", "value": "ana" },
+        { "name": "limit", "value": "5" },
+        { "name": "offset", "value": "0" }
+      ]
+    },
+    {
+      "id": "019938f1-6d92-41f6-8914-86aeaecb68cd",
+      "name": "Customers - Get By Id",
+      "url": "{{baseUrl}}/customers/{{customerId}}",
+      "method": "GET",
+      "headers": [],
+      "params": []
+    },
+    {
+      "id": "364b1184-0061-42e3-9a14-4a63e428cf43",
+      "name": "Services - Create (Basic)",
+      "url": "{{baseUrl}}/services",
+      "method": "POST",
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "params": [],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"name\": \"Classic Cut\",\n  \"durationMin\": 30,\n  \"priceCents\": 3500,\n  \"isActive\": true\n}"
+      }
+    },
+    {
+      "id": "3fb7ff9c-fe44-45d5-8550-ce9d3ccfc5a7",
+      "name": "Services - Create (Inactive)",
+      "url": "{{baseUrl}}/services",
+      "method": "POST",
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "params": [],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"name\": \"Legacy Cut\",\n  \"durationMin\": 20,\n  \"priceCents\": 2500,\n  \"isActive\": false\n}"
+      }
+    },
+    {
+      "id": "82c7b6a1-d670-4614-a652-340006b4ecaa",
+      "name": "Services - List (Active)",
+      "url": "{{baseUrl}}/services",
+      "method": "GET",
+      "headers": [],
+      "params": [
+        { "name": "q", "value": "" },
+        { "name": "isActive", "value": "true" },
+        { "name": "limit", "value": "20" },
+        { "name": "offset", "value": "0" }
+      ]
+    },
+    {
+      "id": "281d1008-06e6-4930-93df-1a556b46825d",
+      "name": "Services - List (Inactive)",
+      "url": "{{baseUrl}}/services",
+      "method": "GET",
+      "headers": [],
+      "params": [
+        { "name": "q", "value": "" },
+        { "name": "isActive", "value": "false" },
+        { "name": "limit", "value": "20" },
+        { "name": "offset", "value": "0" }
+      ]
+    },
+    {
+      "id": "f2003b66-1ece-4934-9c01-24da0ea4eb81",
+      "name": "Services - Get By Id",
+      "url": "{{baseUrl}}/services/{{serviceId}}",
+      "method": "GET",
+      "headers": [],
+      "params": []
+    },
+    {
+      "id": "cf65c4fa-fdf4-45fd-9ff8-0c2db5673081",
+      "name": "Services - Update",
+      "url": "{{baseUrl}}/services/{{serviceId}}",
+      "method": "PATCH",
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "params": [],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"name\": \"Classic Cut (Updated)\",\n  \"durationMin\": 45,\n  \"priceCents\": 4500,\n  \"isActive\": true\n}"
+      }
+    },
+    {
+      "id": "bf7622a8-1563-490f-9dc8-ae1822c485ad",
+      "name": "Staff - Create (Active)",
+      "url": "{{baseUrl}}/staff",
+      "method": "POST",
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "params": [],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"fullName\": \"Maria Perez\",\n  \"isActive\": true\n}"
+      }
+    },
+    {
+      "id": "52f9e405-7fcb-4e54-9e28-b4344d4f6516",
+      "name": "Staff - Create (Inactive)",
+      "url": "{{baseUrl}}/staff",
+      "method": "POST",
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "params": [],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"fullName\": \"Juan Torres\",\n  \"isActive\": false\n}"
+      }
+    },
+    {
+      "id": "0be95996-1021-4e63-86f5-604cf55e51cc",
+      "name": "Staff - List (Active)",
+      "url": "{{baseUrl}}/staff",
+      "method": "GET",
+      "headers": [],
+      "params": [
+        { "name": "q", "value": "" },
+        { "name": "isActive", "value": "true" },
+        { "name": "limit", "value": "20" },
+        { "name": "offset", "value": "0" }
+      ]
+    },
+    {
+      "id": "c15e024f-796d-4a7a-961c-69a897e9cb20",
+      "name": "Staff - List (Inactive)",
+      "url": "{{baseUrl}}/staff",
+      "method": "GET",
+      "headers": [],
+      "params": [
+        { "name": "q", "value": "" },
+        { "name": "isActive", "value": "false" },
+        { "name": "limit", "value": "20" },
+        { "name": "offset", "value": "0" }
+      ]
+    },
+    {
+      "id": "85e8073a-b67e-4639-b812-ad86e4339cb3",
+      "name": "Staff - Get By Id",
+      "url": "{{baseUrl}}/staff/{{staffId}}",
+      "method": "GET",
+      "headers": [],
+      "params": []
+    },
+    {
+      "id": "ac427191-f011-4111-81c8-dd7f876395c6",
+      "name": "Staff - Update",
+      "url": "{{baseUrl}}/staff/{{staffId}}",
+      "method": "PATCH",
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "params": [],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"fullName\": \"Maria Perez (Senior)\",\n  \"isActive\": true\n}"
+      }
+    },
+    {
+      "id": "67945b75-e653-4a7b-b874-d12c39353459",
+      "name": "Staff - Add Availability",
+      "url": "{{baseUrl}}/staff/{{staffId}}/availability",
+      "method": "POST",
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "params": [],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"dayOfWeek\": 1,\n  \"startMin\": 540,\n  \"endMin\": 1020\n}"
+      }
+    },
+    {
+      "id": "af3950dc-af36-4747-8231-750b3eb19111",
+      "name": "Staff - List Availability",
+      "url": "{{baseUrl}}/staff/{{staffId}}/availability",
+      "method": "GET",
+      "headers": [],
+      "params": []
+    },
+    {
+      "id": "ea2e5181-c1e6-4ff3-b8e5-daaa1a14f127",
+      "name": "Staff - Delete Availability",
+      "url": "{{baseUrl}}/staff/{{staffId}}/availability/{{availabilityRuleId}}",
+      "method": "DELETE",
+      "headers": [],
+      "params": []
+    },
+    {
+      "id": "efddb5ef-8ef9-4d5d-95fe-a7846cafb4c6",
+      "name": "Staff - List Slots (Default Step)",
+      "url": "{{baseUrl}}/staff/{{staffId}}/slots",
+      "method": "GET",
+      "headers": [],
+      "params": [
+        { "name": "date", "value": "2026-02-10" },
+        { "name": "serviceId", "value": "{{serviceId}}" }
+      ]
+    },
+    {
+      "id": "5907dbff-9e09-49ab-8fda-87224e62699c",
+      "name": "Staff - List Slots (Step 30)",
+      "url": "{{baseUrl}}/staff/{{staffId}}/slots",
+      "method": "GET",
+      "headers": [],
+      "params": [
+        { "name": "date", "value": "2026-02-10" },
+        { "name": "serviceId", "value": "{{serviceId}}" },
+        { "name": "stepMin", "value": "30" }
+      ]
+    },
+    {
+      "id": "cab3c116-1c82-45ea-bdfb-a3f8c76d03ef",
+      "name": "Appointments - Create (Basic)",
+      "url": "{{baseUrl}}/appointments",
+      "method": "POST",
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "params": [],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"customerId\": \"{{customerId}}\",\n  \"staffId\": \"{{staffId}}\",\n  \"serviceId\": \"{{serviceId}}\",\n  \"startAt\": \"2026-02-10T13:30:00.000Z\"\n}"
+      }
+    },
+    {
+      "id": "e845fd62-7188-49f2-b0f3-9b893f22079f",
+      "name": "Appointments - Create (With Notes)",
+      "url": "{{baseUrl}}/appointments",
+      "method": "POST",
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "params": [],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"customerId\": \"{{customerId}}\",\n  \"staffId\": \"{{staffId}}\",\n  \"serviceId\": \"{{serviceId}}\",\n  \"startAt\": \"2026-02-10T14:30:00.000Z\",\n  \"notes\": \"Cliente prefiere tijera\"\n}"
+      }
+    },
+    {
+      "id": "ffd0af2b-bd6e-4aec-b4ae-d7c7a049d5e7",
+      "name": "Appointments - List (Default)",
+      "url": "{{baseUrl}}/appointments",
+      "method": "GET",
+      "headers": [],
+      "params": [
+        { "name": "staffId", "value": "{{staffId}}" },
+        { "name": "from", "value": "2026-02-01T00:00:00.000Z" },
+        { "name": "to", "value": "2026-02-28T23:59:59.999Z" },
+        { "name": "limit", "value": "50" },
+        { "name": "offset", "value": "0" }
+      ]
+    },
+    {
+      "id": "049dda02-d221-44a2-982d-ec404f8c6149",
+      "name": "Appointments - List (Paged)",
+      "url": "{{baseUrl}}/appointments",
+      "method": "GET",
+      "headers": [],
+      "params": [
+        { "name": "staffId", "value": "{{staffId}}" },
+        { "name": "from", "value": "2026-02-01T00:00:00.000Z" },
+        { "name": "to", "value": "2026-02-28T23:59:59.999Z" },
+        { "name": "limit", "value": "10" },
+        { "name": "offset", "value": "10" }
+      ]
+    },
+    {
+      "id": "14b78e7d-fc04-4d46-9b84-d2693ccde97a",
+      "name": "Appointments - Cancel (With Reason)",
+      "url": "{{baseUrl}}/appointments/{{appointmentId}}/cancel",
+      "method": "PATCH",
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "params": [],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"reason\": \"Cliente no puede asistir\"\n}"
+      }
+    },
+    {
+      "id": "a98d7634-20e4-4bb2-8892-67f9495e6bc6",
+      "name": "Appointments - Cancel (No Reason)",
+      "url": "{{baseUrl}}/appointments/{{appointmentId}}/cancel",
+      "method": "PATCH",
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "params": [],
+      "body": {
+        "type": "json",
+        "raw": "{}"
+      }
+    },
+    {
+      "id": "4b60e0a1-4be3-4d63-9c7a-1b3129d07c61",
+      "name": "Appointments - Reschedule (Basic)",
+      "url": "{{baseUrl}}/appointments/{{appointmentId}}/reschedule",
+      "method": "PATCH",
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "params": [],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"startAt\": \"2026-02-10T16:00:00.000Z\"\n}"
+      }
+    },
+    {
+      "id": "8f6f0f7b-7eb3-4d1a-80dd-7a2e1e0f6d7b",
+      "name": "Appointments - Reschedule (With Notes)",
+      "url": "{{baseUrl}}/appointments/{{appointmentId}}/reschedule",
+      "method": "PATCH",
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "params": [],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"startAt\": \"2026-02-10T17:00:00.000Z\",\n  \"notes\": \"Reprogramado por clima\"\n}"
+      }
+    }
+  ]
+}
