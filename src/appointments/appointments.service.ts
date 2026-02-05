@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {
   BadRequestException,
   ConflictException,
@@ -48,6 +49,7 @@ export class AppointmentsService {
         customerId: dto.customerId,
         staffId: dto.staffId,
         serviceId: dto.serviceId,
+        status: 'BOOKED',
         startAt,
         endAt,
         notes: dto.notes?.trim() ?? null,
@@ -79,6 +81,7 @@ export class AppointmentsService {
 
     const where: Prisma.AppointmentWhereInput = {
       staffId: query.staffId,
+      status: 'BOOKED',
       startAt: { gte: from },
       endAt: { lte: to },
     };
@@ -133,10 +136,85 @@ export class AppointmentsService {
     const conflict = await this.prisma.appointment.findFirst({
       where: {
         staffId,
+        status: 'BOOKED',
         AND: [
           { startAt: { lt: endAt } }, // existing starts before new ends
           { endAt: { gt: startAt } }, // existing ends after new starts
         ],
+      },
+      select: { id: true, startAt: true, endAt: true },
+    });
+
+    if (conflict) {
+      throw new ConflictException({
+        message: 'Time slot is already booked',
+        conflict,
+      });
+    }
+  }
+
+  async cancel(id: string, reason?: string) {
+    const appointment = await this.prisma.appointment.findUnique({
+      where: { id },
+    });
+    if (!appointment) throw new NotFoundException('Appointment not found!');
+
+    if (appointment.status === 'CANCELLED') {
+      return appointment;
+    }
+
+    const notes = reason ? `[CANCELLED] ${reason}` : appointment.notes;
+
+    await this.prisma.appointment.update({
+      where: { id },
+      data: {
+        status: 'CANCELLED',
+        cancelledAt: new Date(),
+        notes: notes ?? null,
+      },
+    });
+  }
+
+  async reschedule(id: string, dto: { startAt: string; notes?: string }) {
+    const appt = await this.prisma.appointment.findUnique({
+      where: { id },
+      include: { service: true, staff: true },
+    });
+    if (!appt) throw new NotFoundException('Appointment not found');
+    if (appt.status === 'CANCELLED') {
+      throw new BadRequestException('Cannot reschedule a cancelled appointment');
+    }
+
+    const startAt = new Date(dto.startAt);
+    if (Number.isNaN(startAt.getTime())) {
+      throw new BadRequestException('startAt must be a valid ISO date string');
+    }
+
+    const endAt = new Date(startAt.getTime() + appt.service.durationMin * 60_000);
+
+    await this.assertWithinAvailability(appt.staffId, startAt, endAt);
+
+    // Importante: conflicto ignorando el mismo appointment
+    await this.assertNoConflictsExcept(appt.staffId, startAt, endAt, appt.id);
+
+    return this.prisma.appointment.update({
+      where: { id },
+      data: {
+        startAt,
+        endAt,
+        notes: dto.notes?.trim() ?? appt.notes ?? null,
+      },
+      include: { customer: true, service: true, staff: true },
+    });
+  }
+
+  private async assertNoConflictsExcept(staffId: string, startAt: Date, endAt: Date, excludeId: string) {
+    const conflict = await this.prisma.appointment.findFirst({
+      where: {
+        staffId,
+        status: 'BOOKED',
+        id: { not: excludeId },
+        AND: [{ startAt: { lt: endAt } }, { endAt: { gt: startAt } }],
       },
       select: { id: true, startAt: true, endAt: true },
     });

@@ -186,6 +186,7 @@ export class StaffService {
     const appointments = await this.prisma.appointment.findMany({
       where: {
         staffId,
+        status: 'BOOKED',
         startAt: { gte: dayStart },
         endAt: { lte: dayEnd },
       },

@@ -78,6 +78,7 @@ model Appointment {
   notes      String?
   createdAt  DateTime          @default(now())
   updatedAt  DateTime          @updatedAt
+  cancelledAt DateTime?
 
   customer Customer    @relation(fields: [customerId], references: [id], onDelete: Restrict)
   staff    StaffMember @relation(fields: [staffId], references: [id], onDelete: Restrict)
