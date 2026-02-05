@@ -19,11 +19,6 @@ API backend para manejar turnos (estética/peluquería/etc): clientes, servicios
 - [Healthchecks](#healthchecks)
 - [Endpoints](#endpoints)
 - [Ejemplos (curl)](#ejemplos-curl)
-- [Estilo y convenciones](#estilo-y-convenciones)
-- [Workflow con GitHub (branches + PRs)](#workflow-con-github-branches--prs)
-- [Troubleshooting](#troubleshooting)
-- [Roadmap](#roadmap)
-- [Licencia](#licencia)
 
 ---
 
@@ -103,8 +98,8 @@ PRISMA_ENV=docker
 
 ---
 
-Correr el proyecto
-Opción A: Full Docker (API + DB)
+## Correr el proyecto
+## Opción A: Full Docker (API + DB)
 Levanta todo para cualquiera que clone el repo.
 docker compose up --build
 
@@ -120,7 +115,7 @@ docker compose down
 
 ---
 
-Opción B: DB en Docker + API local
+## Opción B: DB en Docker + API local
 Útil para desarrollo (hot reload, debugging).
 
 Levantar solo DB:
@@ -130,7 +125,9 @@ Instalar deps:
 npm ci
 Crear .env.local (a partir de .env.example) y apuntar a 127.0.0.1:5432
 
-Migrar DB:
+---
+
+## Migrar DB:
 npx prisma migrate dev
 
 Correr API:
@@ -146,7 +143,7 @@ npx prisma generate
 Reset DB (destructivo):
 npx prisma migrate reset
 
-Healthchecks
+## Healthchecks
 GET /health → indica que la app está levantada (no chequea DB)
 GET /ready → chequea conectividad a DB (ej: SELECT 1)
 
@@ -154,7 +151,7 @@ Esto sirve para Docker y orquestadores: un container puede estar “vivo” pero
 
 ---
 
-Endpoints
+## Endpoints
 Nota: los nombres pueden variar según tu implementación final. Ajustá si renombraste módulos.
 
 Customers:
@@ -193,7 +190,7 @@ PATCH /appointments/:id/reschedule
 
 ---
 
-Ejemplos (curl)
+## Ejemplos (curl)
 Reemplazá <customerId>, <serviceId>, <staffId>, <appointmentId>.
 
 Health:
